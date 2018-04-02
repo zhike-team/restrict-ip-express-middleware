@@ -1,4 +1,4 @@
-# restrict-ip-koa-middleware
+# restrict-ip-express-middleware
 
 ## 用途
 
