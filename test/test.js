@@ -24,11 +24,12 @@ const blacklistRestrict = restrictIp({
 
 const customHandlerRestrict = restrictIp({
   blacklist: new Set(blacklist),
-  onRestrict: async (req, res, next) => {
+  onRestrict: async (req, res, next, ip) => {
     if(req.query.hasPassport){
       next()
     }
     else{
+      console.log(ip + ' restricted')
       res.status(403).send('custom')
     }
   }
@@ -148,7 +149,7 @@ describe('自定义函数拦截', function () {
   })
   it('自定义拦截函数 拦截', async function () {
     let fakeIp = '4.4.4.4'
-    let a = await request(server)
+    await request(server)
       .get('/3')
       .set('x-real-ip', fakeIp)
       .expect(403)
